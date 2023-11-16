@@ -1,14 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { userColumns, userRows } from "../../datatablesource";
 import "./datatable.scss"
 import { DataGrid } from '@mui/x-data-grid';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch"
+import axios from "axios";
 
-const DataTable = () => {
-  const [data,setData] = useState(userRows)
+const DataTable = ({columns}) => {
+  const location = useLocation();
+  const path = location.pathname.split("/")[1];
+  const [list,setList] = useState([]);
+  const {data,loading,error} = useFetch(`/${path}`)
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id!== id))
+  useEffect(() => {
+    setList(data);
+  }, [data]);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/${path}/${id}`);
+      setList(list.filter((item) => item._id !== id));
+    } catch (err) {}
   };
 
   const actionColumn = [
@@ -22,7 +34,7 @@ const DataTable = () => {
             <Link to="/users/test" style={{textDecoration:"none"}}> 
             <div className="viewButton">View</div>
             </Link>
-            <div className="deleteButton" onClick={() =>handleDelete(params.row.id)}>Delete</div>
+            <div className="deleteButton" onClick={() =>handleDelete(params.row._id)}>Delete</div>
           </div>
         );
       },
@@ -31,15 +43,15 @@ const DataTable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
-        <Link to="/users/new" className="link"> 
+        {path}
+        <Link to={`/${path}/new`} className="link"> 
         Add New
         </Link>
       </div>
        <DataGrid
        className="datagrid"
-        rows={data}
-        columns={userColumns.concat(actionColumn)}
+        rows={list}
+        columns={columns.concat(actionColumn)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 9 },
@@ -47,6 +59,7 @@ const DataTable = () => {
         }}
         pageSizeOptions={[0, 9]}
         checkboxSelection
+        getRowId={row=>row._id}
       />
     </div>
   )

@@ -13,10 +13,10 @@
 
         .link{
             text-decoration: none;
-            color: green;
+            color: brown;
             font-size: 16px;
             font-weight: 400;
-            border: 1px solid green;
+            border: 1px solid brown;
             padding: 5px;
             border-radius: 5px;
             cursor: pointer;
@@ -42,18 +42,18 @@
         padding: 5px;
         border-radius: 5px;
 
-        &.active{
+        &.active {
+            background-color: rgba(0, 128, 0, 0.05);
             color: green;
-            background-color: rgb(0,128,0,0.151);
-        }
-        &.pending{
-            color: green;
-            background-color: rgb(255,217,0,0.05);
-        }
-        &.passive{
+          }
+          &.pending {
+            background-color: rgba(255, 217, 0, 0.05);
             color: goldenrod;
-            background-color: rgb(189,189,3,0.103);
-        }
+          }
+          &.passive {
+            background-color: rgba(255, 0, 0, 0.05);
+            color: crimson;
+          }
     }
 
     .cellAction{
@@ -64,15 +64,15 @@
         .viewButton{
             padding: 2px 5px;
             border-radius: 5px;
-            color: #8b3300;     //darkblue
-            border: 1px dotted rgba(139, 51, 0, 1);     //rgba(0,0,139,0.596)
+            color: darkblue;     // #8b3300
+            border: 1px dotted rgba(0,0,139,0.596);     //rgba(139, 51, 0, 1)
             cursor: pointer;
         }
         .deleteButton{
             padding: 2px 5px;
             border-radius: 5px;
-            color: #8b3300;     //darkblue
-            border: 1px dotted rgba(139, 51, 0, 1);     //rgba(0,0,139,0.596)
+            color: crimson;     //#8b3300
+            border: 1px dotted rgba(220, 20, 60, 0.6);     //rgba(139, 51, 0, 1)
             cursor: pointer;
         }
     }
